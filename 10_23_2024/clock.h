@@ -24,9 +24,9 @@ class clockType
 {
 public:
     // clockType();
-    clockType(int h = 0, int m = 0, int s = 0, amPmType = PM, clockFormatType = TWENTYFOUR);
+    clockType(int h = 0, int m = 0, int s = 0, std::string = "PM", clockFormatType = TWENTYFOUR);
     // clockType(int h, int m);
-    void setTime(int h, int m, int s, amPmType = PM);
+    void setTime(int h, int m, int s, std::string = "PM");
 
     void getTime(int &, int &, int &) const;
     int getHour() const;
@@ -42,7 +42,7 @@ private:
     int hr;
     int min;
     int sec;
-    amPmType timeOfDay;
+    std::string timeOfDay;
     clockFormatType format;
 };
 #endif

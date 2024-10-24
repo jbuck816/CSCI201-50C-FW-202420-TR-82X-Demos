@@ -2,6 +2,7 @@
 #include <string>
 #include <iomanip>
 #include <limits>
+#include <algorithm>
 #include "clock.h"
 
 clockType createClock();
@@ -45,7 +46,7 @@ int main()
 clockType createClock()
 {
     int hr, min, sec;
-    int tod;
+    std::string tod;
     int format;
     std::cout << "What kind of clock do you have?" << std::endl;
     for (int i = 0; i < 2; i++)
@@ -55,7 +56,7 @@ clockType createClock()
     std::cin >> format;
     while (!std::cin || format < 1 || format > 2)
     {
-        if (codeGradeLoopFix("line 52"))
+        if (codeGradeLoopFix("line 58"))
         {
             return clockType(0, 0, 0);
         }
@@ -76,22 +77,24 @@ clockType createClock()
     }
     if (format == 1)
     {
-        std::cout << "Is it AM (1) or PM (2)?" << std::endl;
-        std::cin >> tod;
-        while (!std::cin || tod < 1 || tod > 2)
+        std::cout << "Is it AM or PM?" << std::endl;
+        std::cin >> std::ws;
+        std::getline(std::cin, tod);
+
+        std::transform(tod.begin(), tod.end(), tod.begin(), ::toupper);
+        std::cout << tod << std::endl;
+        while (tod != "AM" && tod != "PM")
         {
-            if (codeGradeLoopFix("AM PM loop"))
+            if (codeGradeLoopFix("line 52"))
             {
                 return clockType(0, 0, 0);
             }
-            if (!std::cin)
-            {
-                resetStream();
-            }
+            std::cout << "Is it AM or PM?" << std::endl;
+            std::cin >> std::ws;
+            std::getline(std::cin, tod);
 
-            std::cout << "Please choose 1 for AM or 2 for PM." << std::endl;
-
-            std::cin >> tod;
+            std::transform(tod.begin(), tod.end(), tod.begin(), ::toupper);
+            std::cout << tod << std::endl;
         }
     }
     std::cout << "Enter the hour: ";
@@ -159,7 +162,7 @@ clockType createClock()
     }
     if (format == 1)
     {
-        clockType newClock(hr, min, sec, times[tod - 1], formats[format - 1]);
+        clockType newClock(hr, min, sec, tod, formats[format - 1]);
         return newClock;
     }
     else
