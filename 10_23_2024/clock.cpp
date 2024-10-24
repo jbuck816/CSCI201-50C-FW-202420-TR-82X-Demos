@@ -6,9 +6,11 @@
     min = 0;
     sec = 0;
 } */
-clockType::clockType(int h, int m, int s)
+clockType::clockType(int h, int m, int s, amPmType am, clockFormatType f)
 {
     setTime(h, m, s);
+    timeOfDay = am;
+    format = f;
     count++;
 }
 void clockType::getTime(int &h, int &m, int &s) const
@@ -28,16 +30,33 @@ void clockType::setHour(int h)
 void clockType::incrementHours()
 {
     hr++;
-    hr = hr % 23;
+    if (format == TWENTYFOUR)
+    {
+        hr = hr % 24;
+    }
+    else
+    {
+        if (hr == 12)
+        {
+            if (timeOfDay == PM)
+                timeOfDay = AM;
+            else
+                timeOfDay = PM;
+        }
+    }
 }
 int clockType::count = 0;
 /* clockType::clockType(int h, int m)
 {
     setTime(h, m, 0);
 } */
-void clockType::setTime(int h, int m, int s)
+void clockType::setTime(int h, int m, int s, amPmType a)
 {
-    hr = h % 24;
+    timeOfDay = a;
+    if (format == TWENTYFOUR)
+        hr = h % 24;
+    else
+        hr = h % 12 + 1;
     min = m % 60;
     sec = s % 60;
 }

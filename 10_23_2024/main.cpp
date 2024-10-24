@@ -7,6 +7,8 @@
 clockType createClock();
 void morningOrAfternoon(const clockType &, bool &);
 void resetStream();
+bool codeGradeLoopFix(std::string errLocation);
+// add getters and setters min, sec, timeofday
 
 int main()
 {
@@ -43,11 +45,64 @@ int main()
 clockType createClock()
 {
     int hr, min, sec;
+    int tod;
+    int format;
+    std::cout << "What kind of clock do you have?" << std::endl;
+    for (int i = 0; i < 2; i++)
+    {
+        std::cout << i + 1 << ": " << clockFormatToStr[i] << std::endl;
+    }
+    std::cin >> format;
+    while (!std::cin || format < 1 || format > 2)
+    {
+        if (codeGradeLoopFix("line 52"))
+        {
+            return clockType(0, 0, 0);
+        }
+        if (!std::cin)
+        {
+            resetStream();
+        }
+        else
+        {
+            std::cout << "Please choose a clock type from the list." << std::endl;
+        }
+        std::cout << "What kind of clock do you have?" << std::endl;
+        for (int i = 0; i < 2; i++)
+        {
+            std::cout << i + 1 << ": " << clockFormatToStr[i] << std::endl;
+        }
+        std::cin >> format;
+    }
+    if (format == 1)
+    {
+        std::cout << "Is it AM (1) or PM (2)?" << std::endl;
+        std::cin >> tod;
+        while (!std::cin || tod < 1 || tod > 2)
+        {
+            if (codeGradeLoopFix("AM PM loop"))
+            {
+                return clockType(0, 0, 0);
+            }
+            if (!std::cin)
+            {
+                resetStream();
+            }
+
+            std::cout << "Please choose 1 for AM or 2 for PM." << std::endl;
+
+            std::cin >> tod;
+        }
+    }
     std::cout << "Enter the hour: ";
     std::cin >> hr;
     std::cout << std::endl;
     while (!std::cin || hr < 0 || hr > 23)
     {
+        if (codeGradeLoopFix("line 52"))
+        {
+            return clockType(0, 0, 0);
+        }
         if (!std::cin)
         {
             resetStream();
@@ -65,6 +120,10 @@ clockType createClock()
     std::cout << std::endl;
     while (!std::cin || min < 0 || min > 59)
     {
+        if (codeGradeLoopFix("Line 73"))
+        {
+            return clockType(0, 0, 0);
+        }
         if (!std::cin)
         {
             resetStream();
@@ -82,6 +141,10 @@ clockType createClock()
     std::cout << std::endl;
     while (!std::cin || sec < 0 || sec > 59)
     {
+        if (codeGradeLoopFix("Line 94"))
+        {
+            return clockType(0, 0, 0);
+        }
         if (!std::cin)
         {
             resetStream();
@@ -94,8 +157,16 @@ clockType createClock()
         std::cin >> sec;
         std::cout << std::endl;
     }
-    clockType newClock(hr, min, sec);
-    return newClock;
+    if (format == 1)
+    {
+        clockType newClock(hr, min, sec, times[tod - 1], formats[format - 1]);
+        return newClock;
+    }
+    else
+    {
+        clockType newClock(hr, min, sec);
+        return newClock;
+    }
 }
 
 void morningOrAfternoon(const clockType &c, bool &am)
@@ -119,4 +190,14 @@ void resetStream()
     std::cout << "You entered something that is not a number." << std::endl;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+bool codeGradeLoopFix(std::string errLocation)
+{
+    if (std::cin.eof())
+    {
+        std::cout << "There was a problem and there is no more input! @" + errLocation << std::endl;
+        return true;
+    }
+    return false;
 }
