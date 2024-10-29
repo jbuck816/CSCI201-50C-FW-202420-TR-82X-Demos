@@ -64,6 +64,7 @@ std::string person::tostring()
 {
     std::string out;
     out = "Name: " + getName() + "\n";
+    out += "Race: " + getRace() + "\n";
 
     return out;
 }
@@ -121,4 +122,9 @@ void person::setName(std::string fn, std::string ln, char m)
     fname = fn;
     lname = ln;
     mi = m;
+}
+
+std::string person::getRace()
+{
+    return raceToStr[race];
 }

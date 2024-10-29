@@ -11,7 +11,21 @@ enum raceType
     BLACK,
     OTHER
 };
-
+const int NUM_RACES = 7;
+const raceType races[] = {NATIVE,
+                          ISLANDER,
+                          HISPANIC,
+                          WHITE,
+                          ASIAN,
+                          BLACK,
+                          OTHER};
+const std::string raceToStr[] = {"Native American",
+                                 "Pacific Islander",
+                                 "Hispanic",
+                                 "White",
+                                 "Asian",
+                                 "Black",
+                                 "Other"};
 class person
 {
 public:
@@ -36,7 +50,7 @@ public:
     void setHairColor(std::string);
     std::string tostring();
 
-private:
+protected:
     std::string fname;
     std::string lname;
     char mi;
@@ -74,6 +88,17 @@ class student : public person
 {
     double GPA;
     std::string major;
+    course schedule;
+};
+
+class course
+{
+    std::string dept;
+    int courseNum;
+    std::string section;
+    int semester;
+    int creditHours;
+    char grade;
 };
 
 #endif
