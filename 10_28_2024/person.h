@@ -34,6 +34,7 @@ public:
     void setHeight(double);
     void setWeight(double);
     void setHairColor(std::string);
+    std::string tostring();
 
 private:
     std::string fname;
@@ -50,19 +51,21 @@ private:
 class employee : public person
 {
 public:
+    employee(std::string first_name, std::string last_name, int a, raceType r, double h, double w, std::string hair, std::string eye, std::string hire, double sal, unsigned int id, std::string pos, bool hour, char middle = '\0');
     std::string getHireDate();
     double getSalary();
     int getEmpID();
     std::string getPosition();
     bool isHourly();
     void setSalary(double salary);
-    void setPosition(std::string position);
+    void setPosition(std::string pos);
     void setHourly(bool);
+    std::string tostring();
 
 private:
     std::string hireDate;
     double salary;
-    int empID;
+    unsigned int empID;
     std::string position;
     bool hourly;
 };
