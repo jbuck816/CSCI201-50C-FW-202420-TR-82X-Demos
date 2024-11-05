@@ -4,6 +4,10 @@
 #include <string>
 #include "drink.h"
 
+// lecture activity. Please submit the code you have changed
+// add a drink pointer to the main and create a new dynamic drink.
+// create a dynamic array of doubles in the main.
+
 void resetStream();
 sizeType inputDrinkSize();
 baseType inputDrinkBase();
@@ -33,6 +37,42 @@ int main()
     delete myDrink;
     delete[] list;
 
+    drink **order;
+    int numDrinks = 1;
+    order = new drink *[numDrinks];
+    char yN = 'Y';
+    while (yN == 'Y')
+    {
+        order[numDrinks - 1] = new drink(inputDrinkBase(), inputDrinkTemperature(), inputDrinkSize(), inputDrinkDairy(), inputDrinkFlavor());
+        std::cout << order[numDrinks - 1]->tostring() << std::endl;
+        std::cout << "Would you like another drink? ";
+        std::cin >> yN;
+        yN = toupper(yN);
+        while (yN != 'Y' && yN != 'N')
+        {
+            std::cout << "You did not enter y or n." << std::endl;
+            std::cout << "Would you like another drink? ";
+            std::cin >> yN;
+            yN = toupper(yN);
+        }
+        if (yN == 'Y')
+        {
+            drink **cpy = order;
+            order = new drink *[++numDrinks];
+            for (int i = 0; i < numDrinks - 1; i++)
+            {
+                order[i] = cpy[i];
+            }
+            delete[] cpy;
+        }
+    }
+    std::cout << "The list of drinks is:" << std::endl;
+    for (int i = 0; i < numDrinks; i++)
+    {
+        std::cout << order[i]->tostring() << std::endl;
+        delete order[i];
+    }
+    delete[] order;
     return 0;
 }
 
