@@ -8,6 +8,8 @@ class drinkOrder
 {
 public:
     drinkOrder();
+    drinkOrder(const drinkOrder &);
+    ~drinkOrder();
     void addDrink(const drink &);
     std::string tostring() const;
     void removeLastDrink();

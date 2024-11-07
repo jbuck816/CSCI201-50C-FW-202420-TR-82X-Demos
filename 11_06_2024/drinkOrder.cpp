@@ -6,6 +6,15 @@ drinkOrder::drinkOrder()
     drinks = new drink *[numDrinks + 1];
     drinks[0] = nullptr;
 }
+drinkOrder::drinkOrder(const drinkOrder &otherDrinkOrder)
+{
+    numDrinks = otherDrinkOrder.numDrinks;
+    drinks = new drink *[numDrinks + 1];
+    for (int i = 0; i < numDrinks; i++)
+    {
+        drinks[i] = new drink(*otherDrinkOrder.drinks[i]);
+    }
+}
 
 void drinkOrder::addDrink(const drink &drinkToAdd)
 {
@@ -38,4 +47,13 @@ void drinkOrder::removeLastDrink()
 {
     delete drinks[numDrinks - 1];
     numDrinks--;
+}
+
+drinkOrder::~drinkOrder()
+{
+    for (int i = 0; i < numDrinks; i++)
+    {
+        delete drinks[i];
+    }
+    delete[] drinks;
 }

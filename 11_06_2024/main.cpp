@@ -4,10 +4,10 @@
 #include <string>
 #include "drink.h"
 #include "drinkOrder.h"
+#include "course.h"
 
-// lecture activity. Please submit the code you have changed
-// add a drink pointer to the main and create a new dynamic drink.
-// create a dynamic array of doubles in the main.
+// fill in the constructor, copy constructor, and destructor for the course class.
+// Test against the end of the main below.
 
 void resetStream();
 sizeType inputDrinkSize();
@@ -47,6 +47,8 @@ int main()
     order.removeLastDrink();
     std::cout << order.tostring() << std::endl;
     std::cout << order2.tostring() << std::endl;
+    dayType days[] = {m, w};
+    course myCourse(CSCI, 201, "50C", days, 2, 6, 0, 9, 50, "DUPHS", "C", 2210);
     return 0;
 }
 
