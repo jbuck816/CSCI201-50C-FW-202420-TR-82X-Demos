@@ -49,7 +49,7 @@ public:
     void setWeight(double);
     void setHairColor(std::string);
     virtual std::string tostring();
-    virtual person *makeCopy();
+    virtual person *makeCopy() = 0;
 
 protected:
     std::string fname;

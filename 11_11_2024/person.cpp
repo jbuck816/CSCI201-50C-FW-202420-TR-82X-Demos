@@ -129,11 +129,6 @@ std::string person::getRace()
     return raceToStr[race];
 }
 
-person *person::makeCopy()
-{
-    return new person(*this);
-}
-
 employee *employee::makeCopy()
 {
     return new employee(*this);

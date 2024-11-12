@@ -10,8 +10,11 @@ enum personType
 
 void addToParty(person **party, person *, int &nextPos);
 person createPerson();
+
+// fix the main (remove create person add student constructor and fill in createStudent)
+// don't forget makeCopy in student
 employee createEmployee();
-student *createStudent();
+student createStudent();
 
 int main()
 {
@@ -81,7 +84,7 @@ employee createEmployee()
     return employee("Santa", "Claus", 565, OTHER, 6, 400, "white", "blue", "2024-11-10", 60000, 1, "Head delivery guy", false);
 }
 
-student *createStudent()
+student createStudent()
 {
     return nullptr;
 }
