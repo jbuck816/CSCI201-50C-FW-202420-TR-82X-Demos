@@ -88,6 +88,7 @@ private:
 
 class course
 {
+private:
     std::string dept;
     int courseNum;
     std::string section;
