@@ -32,11 +32,16 @@ public:
     void getTime(int &, int &, int &) const;
     int getHour() const;
     void setHour(int h);
-    std::string tostring() const;
+
     void incrementSeconds();
     void incrementMinutes();
     void incrementHours();
-    bool equalTime(const clockType &) const;
+
+    bool operator==(const clockType &) const;
+    // friend bool operator==(const clockType &, const clockType &);
+    friend clockType operator+(const int, const clockType &);
+    clockType operator+(const int);
+    friend std::ostream &operator<<(std::ostream &, const clockType &);
     static int count;
 
 private:
@@ -45,5 +50,7 @@ private:
     int sec;
     amPmType timeOfDay;
     clockFormatType format;
+    bool equalTime(const clockType &) const;
+    std::string tostring() const;
 };
 #endif

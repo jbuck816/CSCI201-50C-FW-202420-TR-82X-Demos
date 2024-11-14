@@ -8,7 +8,8 @@
 } */
 clockType::clockType(int h, int m, int s, std::string am, clockFormatType f)
 {
-    setTime(h, m, s);
+    this->format = f;
+
     std::transform(am.begin(), am.end(), am.begin(), ::toupper);
     bool set = false;
     for (int i = 0; i < 2; i++)
@@ -23,7 +24,7 @@ clockType::clockType(int h, int m, int s, std::string am, clockFormatType f)
     {
         timeOfDay = times[1];
     }
-    format = f;
+    setTime(h, m, s);
     count++;
 }
 void clockType::getTime(int &h, int &m, int &s) const
@@ -95,10 +96,13 @@ void clockType::setTime(int h, int m, int s, std::string a)
 
 std::string clockType::tostring() const
 {
-    std::string myOutputStr;
-    myOutputStr = myOutputStr + std::to_string(hr);
+
     std::ostringstream outStr;
-    outStr << std::setfill('0') << std::setw(2) << hr << ":" << std::setw(2) << min << ":" << std::setw(2) << sec << " " << timeOfDay;
+    outStr << std::setfill('0') << std::setw(2) << hr << ":" << std::setw(2) << min << ":" << std::setw(2) << sec;
+    if (this->format == TWELVE)
+    {
+        outStr << " " << amPmToStr[timeOfDay];
+    }
     return outStr.str();
 }
 
@@ -176,4 +180,35 @@ bool clockType::equalTime(const clockType &otherClock) const
     eq = cmpH == cmpOH && this->min == otherClock.min && this->sec == otherClock.sec;
 
     return eq;
+}
+
+bool clockType::operator==(const clockType &rightHandClock) const
+{
+    return this->equalTime(rightHandClock);
+}
+
+/* bool operator==(const clockType &leftHandClock, const clockType &rightHandClock)
+{
+    return leftHandClock.equalTime(rightHandClock);
+} */
+
+clockType operator+(const int minutesToAdd, const clockType &clock)
+{
+    clockType newClock(clock);
+    for (int i = 0; i < minutesToAdd; i++)
+    {
+        newClock.incrementMinutes();
+    }
+    return newClock;
+}
+
+clockType clockType::operator+(const int minutesToAdd)
+{
+    return minutesToAdd + *this;
+}
+
+std::ostream &operator<<(std::ostream &outputStream, const clockType &clockToPrint)
+{
+    outputStream << clockToPrint.tostring();
+    return outputStream;
 }

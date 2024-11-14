@@ -13,33 +13,18 @@ bool codeGradeLoopFix(std::string errLocation);
 
 int main()
 {
-    clockType myClock;
-    clockType secondClock(6, 24, 3);
-    clockType thirdClock(11, 5);
-    clockType fourthClock(14);
-    /* myClock.hr = 8;
-    myClock.min = 48;
-    myClock.sec = 28;
- */
-    clockType fifthClock = createClock();
-    myClock.setTime(8, 48, 28);
-    std::cout << myClock.tostring() << std::endl;
-    std::cout << secondClock.tostring() << std::endl;
-    std::cout << thirdClock.tostring() << std::endl;
-    std::cout << fourthClock.tostring() << std::endl;
-    std::cout << fifthClock.tostring() << std::endl;
-    bool am;
-    morningOrAfternoon(fifthClock, am);
-    if (am)
+    clockType c1(12, 12, 12, "PM", TWELVE);
+    clockType c2;
+    int x = 7;
+    int y = 9;
+    int z = x + y;
+    c1 = 4 + c1;
+    c1 = c1 + 4;
+    if (c1 == c2) // c1.operator==(c2)
     {
-        std::cout << "Fifth clock is in the morning" << std::endl;
+        std::cout << "They are the same." << std::endl;
     }
-    else
-    {
-        std::cout << "fifth clock is in the afternoon" << std::endl;
-    }
-    std::cout << clockType::count << std::endl;
-    myClock.incrementHours();
+    std::cout << c1 << std::endl;
     return 0;
 }
 
