@@ -212,3 +212,11 @@ std::ostream &operator<<(std::ostream &outputStream, const clockType &clockToPri
     outputStream << clockToPrint.tostring();
     return outputStream;
 }
+
+std::istream &operator>>(std::istream &inputStream, clockType &clockToInput)
+{
+    int hr, min, sec;
+    inputStream >> hr >> min >> sec;
+    clockToInput.setTime(hr, min, sec);
+    return inputStream;
+}

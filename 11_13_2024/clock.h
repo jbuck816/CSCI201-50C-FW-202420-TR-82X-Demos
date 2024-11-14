@@ -42,6 +42,7 @@ public:
     friend clockType operator+(const int, const clockType &);
     clockType operator+(const int);
     friend std::ostream &operator<<(std::ostream &, const clockType &);
+    friend std::istream &operator>>(std::istream &, clockType &);
     static int count;
 
 private:
