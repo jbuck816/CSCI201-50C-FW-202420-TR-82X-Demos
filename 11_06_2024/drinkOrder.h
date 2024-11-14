@@ -13,6 +13,7 @@ public:
     void addDrink(const drink &);
     std::string tostring() const;
     void removeLastDrink();
+    const drinkOrder &operator=(const drinkOrder &);
 
 private:
     drink **drinks;

@@ -38,11 +38,19 @@ public:
     void incrementHours();
 
     bool operator==(const clockType &) const;
+    bool operator!=(const clockType &) const;
+    bool operator>(const clockType &) const;
+    bool operator<(const clockType &) const;
+    bool operator>=(const clockType &) const;
+    bool operator<=(const clockType &) const;
     // friend bool operator==(const clockType &, const clockType &);
     friend clockType operator+(const int, const clockType &);
     clockType operator+(const int);
     friend std::ostream &operator<<(std::ostream &, const clockType &);
     friend std::istream &operator>>(std::istream &, clockType &);
+    const clockType &operator=(const clockType &);
+    clockType operator++();
+    clockType operator++(int);
     static int count;
 
 private:

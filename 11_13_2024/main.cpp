@@ -5,11 +5,11 @@
 #include <algorithm>
 #include "clock.h"
 
-clockType createClock();
+clockType *createClock();
 void morningOrAfternoon(const clockType &, bool &);
 void resetStream();
 bool codeGradeLoopFix(std::string errLocation);
-// add getters and setters min, sec, timeofday
+// add body to < >= and <= in clock.cpp
 
 int main()
 {
@@ -18,21 +18,29 @@ int main()
     int x = 7;
     int y = 9;
     int z = x + y;
+    z = x++ + ++y; // y = 10, z = 17, x = 8;
     c1 = 4 + c1;
     c1 = c1 + 4;
+    clockType *c3 = createClock();
+    ++c2;
+    c2++;
     if (c1 == c2) // c1.operator==(c2)
     {
         std::cout << "They are the same." << std::endl;
     }
     std::cout << c1 << std::endl;
+    std::cout << *c3 << std::endl;
+
+    delete c3;
     return 0;
 }
 
-clockType createClock()
+clockType *createClock()
 {
-    int hr, min, sec;
+
     std::string tod;
     int format;
+    clockType *newClock;
     std::cout << "What kind of clock do you have?" << std::endl;
     for (int i = 0; i < 2; i++)
     {
@@ -43,7 +51,7 @@ clockType createClock()
     {
         if (codeGradeLoopFix("line 58"))
         {
-            return clockType(0, 0, 0);
+            return new clockType(0, 0, 0);
         }
         if (!std::cin)
         {
@@ -72,7 +80,7 @@ clockType createClock()
         {
             if (codeGradeLoopFix("line 52"))
             {
-                return clockType(0, 0, 0);
+                return new clockType(0, 0, 0);
             }
             std::cout << "Is it AM or PM?" << std::endl;
             std::cin >> std::ws;
@@ -82,79 +90,18 @@ clockType createClock()
             std::cout << tod << std::endl;
         }
     }
-    std::cout << "Enter the hour: ";
-    std::cin >> hr;
-    std::cout << std::endl;
-    while (!std::cin || hr < 0 || hr > 23)
-    {
-        if (codeGradeLoopFix("line 52"))
-        {
-            return clockType(0, 0, 0);
-        }
-        if (!std::cin)
-        {
-            resetStream();
-        }
-        else
-        {
-            std::cout << "The hour needs to be between 0 and 23. Try again!" << std::endl;
-        }
-        std::cout << "Enter the hour: ";
-        std::cin >> hr;
-        std::cout << std::endl;
-    }
-    std::cout << "Enter the min: ";
-    std::cin >> min;
-    std::cout << std::endl;
-    while (!std::cin || min < 0 || min > 59)
-    {
-        if (codeGradeLoopFix("Line 73"))
-        {
-            return clockType(0, 0, 0);
-        }
-        if (!std::cin)
-        {
-            resetStream();
-        }
-        else
-        {
-            std::cout << "The min needs to be between 0 and 59. Try again!" << std::endl;
-        }
-        std::cout << "Enter the min: ";
-        std::cin >> min;
-        std::cout << std::endl;
-    }
-    std::cout << "Enter the second: ";
-    std::cin >> sec;
-    std::cout << std::endl;
-    while (!std::cin || sec < 0 || sec > 59)
-    {
-        if (codeGradeLoopFix("Line 94"))
-        {
-            return clockType(0, 0, 0);
-        }
-        if (!std::cin)
-        {
-            resetStream();
-        }
-        else
-        {
-            std::cout << "The second needs to be between 0 and 59. Try again!" << std::endl;
-        }
-        std::cout << "Enter the second: ";
-        std::cin >> sec;
-        std::cout << std::endl;
-    }
+
     if (format == 1)
     {
-        clockType newClock(hr, min, sec, tod, formats[format - 1]);
-        return newClock;
+        newClock = new clockType(12, 00, 00, tod, formats[format - 1]);
     }
     else
     {
-        clockType newClock(hr, min, sec);
-        return newClock;
+        newClock = new clockType();
     }
+    std::cout << "Enter the hours, minutes and seconds on the clock: ";
+    std::cin >> *newClock;
+    return newClock;
 }
 
 void morningOrAfternoon(const clockType &c, bool &am)

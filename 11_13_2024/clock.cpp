@@ -217,6 +217,126 @@ std::istream &operator>>(std::istream &inputStream, clockType &clockToInput)
 {
     int hr, min, sec;
     inputStream >> hr >> min >> sec;
+
     clockToInput.setTime(hr, min, sec);
     return inputStream;
+}
+
+const clockType &clockType::operator=(const clockType &rightHandClock)
+{
+    this->hr = rightHandClock.hr;
+    this->min = rightHandClock.min;
+    this->sec = rightHandClock.sec;
+    this->format = rightHandClock.format;
+    this->timeOfDay = rightHandClock.timeOfDay;
+    return *this;
+}
+
+clockType clockType::operator++()
+{
+    this->incrementSeconds();
+    return *this;
+}
+clockType clockType::operator++(int)
+{
+    clockType temp = *this;
+    this->incrementSeconds();
+    return temp;
+}
+
+bool clockType::operator!=(const clockType &rightHandClock) const
+{
+    return !(*this == rightHandClock);
+}
+bool clockType::operator>(const clockType &rightHandClock) const
+{
+
+    int cmpH;
+    int cmpOH;
+    if (this->format == TWELVE)
+    {
+        if (this->timeOfDay == AM && hr != 12)
+        {
+            cmpH = hr;
+        }
+        else if (this->timeOfDay == AM && hr == 12)
+        {
+            cmpH = 0;
+        }
+        else if (hr == 12)
+        {
+            cmpH = hr;
+        }
+        else
+        {
+            cmpH = hr + 12;
+        }
+    }
+    else
+    {
+        cmpH = hr;
+    }
+    if (rightHandClock.format == TWELVE)
+    {
+        if (rightHandClock.timeOfDay == AM && rightHandClock.hr != 12)
+        {
+            cmpOH = rightHandClock.hr;
+        }
+        else if (rightHandClock.timeOfDay == AM && rightHandClock.hr == 12)
+        {
+            cmpOH = 0;
+        }
+        else if (rightHandClock.hr == 12)
+        {
+            cmpOH = rightHandClock.hr;
+        }
+        else
+        {
+            cmpOH = rightHandClock.hr + 12;
+        }
+    }
+    else
+    {
+        cmpOH = rightHandClock.hr;
+    }
+    if (cmpH > cmpOH)
+    {
+        return true;
+    }
+    else if (cmpH == cmpOH)
+    {
+        if (this->min > rightHandClock.min)
+        {
+            return true;
+        }
+        else if (this->min == rightHandClock.min)
+        {
+            if (this->sec > rightHandClock.sec)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool clockType::operator<(const clockType &rightHandClock) const
+{
+}
+bool clockType::operator>=(const clockType &rightHandClock) const
+{
+}
+bool clockType::operator<=(const clockType &rightHandClock) const
+{
 }
