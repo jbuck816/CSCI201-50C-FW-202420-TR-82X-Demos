@@ -37,10 +37,12 @@ int main()
         {
         case PERSON:
         {
-            person p = createPerson();
-            addToParty(party, &p, position);
-            break;
-        }
+            std::cout << "Nope" << std::endl;
+        //    person p = createPerson();
+        //    addToParty(party, &p, position);
+        //    break;
+        } 
+        
         case EMPLOYEE:
         {
             employee e = createEmployee();
@@ -51,6 +53,7 @@ int main()
             break;
             // p = createStudent();
         }
+        default: std::cout << "bruh." << std::endl;
         // addToParty(party, p, position);
         if (position == 10)
         {
